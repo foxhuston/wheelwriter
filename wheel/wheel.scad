@@ -11,6 +11,8 @@ hub_dia = 45;
 
 
 
+// tine("a", true);
+
 union() {
   hub();
 
@@ -80,6 +82,8 @@ module tine(char, is_home = false) {
   start_width    = 1.3;   // mm
   end_width      = 1.3;   // mm
 
+  locator_height = 0.5; // mm
+  locator_offset = 1;
 
   linear_extrude(tine_thickness) {
     // stem
@@ -102,6 +106,19 @@ module tine(char, is_home = false) {
             [0, home_indicator_height]
           ]);
         }
+      }
+    }
+  }
+
+  // Alignment... triangle... thing. Boss?
+  translate([0, tine_length - eps + locator_offset]) {
+    rotate([270, 0, 0]) {
+      linear_extrude(flat_length - locator_offset) {
+        polygon([
+          [-flat_width/4, 0],
+          [flat_width/4, 0],
+          [0, locator_height]
+        ]);
       }
     }
   }
